@@ -19,7 +19,8 @@ func Connect() {
 
 	log.Println("Database connection successful")
 
-	db.AutoMigrate(&models.Users{}, &models.Events{})
+	db.AutoMigrate(&models.Users{}, &models.Events{}, &models.UsersEvents{})
 
+	db.SetupJoinTable(&models.Users{}, "Eventss", &models.UsersEvents{})
 	DB = db
 }

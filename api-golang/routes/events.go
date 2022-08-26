@@ -278,4 +278,5 @@ func InscEventHandlerById(w http.ResponseWriter, r *http.Request) {
 
 func GetUserEvents(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hit the EVENT in USER by ID!")
+
 }
