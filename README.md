@@ -1,10 +1,15 @@
 # Wiselink Test Golang y React
 
-por Franco Montini
+Testing de endpoints:
+Ir al la web de [Postman Endpoints](https://documenter.getpostman.com/view/22472853/VUr1GYKJ) y luego ir a probar con postman(arriba a la derecha)
 
-## CONFIG BACKEND
+## BACKEND
 
-### Docker, Postgress y Golang(Gorm, GorillaMux)
+Tecnologias utilizadas:
+Docker, Golang, GORM, gorilla/mux, Postgress, AIR y Postman(TEST y ENDPOINTS).
+Host API: [http://localhost:8080/](http://localhost:8080/)
+
+### Pasos para iniciar postgres con docker y el backend.
 
 - Desde la consola (BASH) ir a la carpeta api-golang
   `cd api-golang/`
@@ -37,6 +42,4 @@ por Franco Montini
 
 `go run main.go` o `go run .` o `air`
 
-## CONFIG FRONTEND
-
-### Docker, React y Redux-Toolkit
+Test de Backend creado por Franco Montini para Wiselink.
