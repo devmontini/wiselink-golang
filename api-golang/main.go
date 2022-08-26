@@ -66,12 +66,12 @@ func main() {
 		).Methods("DELETE")
 
 	//INSCRIBIRSE AL EVENTO
-	r.HandleFunc("/events/info/{eventId}", routes.InscEventHandlerById).
+	r.HandleFunc("/user/{eventId}", routes.InscEventHandlerById).
 		Queries(
 			"userId", "{userId}",
 		).Methods("POST")
 
-	//INSCRIPCIONES DE USUARIOS
+	//TRAER LAS INSCRIPCIONES DE USUARIOS
 	r.HandleFunc("/user/{userId}", routes.GetUserEvents).Methods("GET")
 
 	http.ListenAndServe(":8080", r)

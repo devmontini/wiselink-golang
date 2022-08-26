@@ -226,7 +226,7 @@ func DeleteEventHandlerById(w http.ResponseWriter, r *http.Request) {
 	var event models.Events
 	var user models.Users
 
-	//AGARRAMOS EL ID
+	//AGARRAMOS EL IDs
 	v := r.URL.Query()
 	userId := v.Get("userId")
 
@@ -272,11 +272,62 @@ func DeleteEventHandlerById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(message)
 }
 
+type UsersEvents struct {
+	UsersID  int `json:"usersid" gorm:"primaryKey"`
+	EventsID int `json:"eventsid" gorm:"primaryKey"`
+}
+
 func InscEventHandlerById(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hit the EVENT in USER by ID!")
+
+	v := r.URL.Query()
+	userId := v.Get("userId")
+	intUserid, err := strconv.Atoi(userId)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	eventId := mux.Vars(r)
+	intIdevent, err := strconv.Atoi(eventId["eventId"])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	var jointable = []UsersEvents{{UsersID: intUserid}, {EventsID: intIdevent}}
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	database.DB.Create(&jointable)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func GetUserEvents(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hit the EVENT in USER by ID!")
+	var jointable models.UsersEvents
 
+	v := r.URL.Query()
+	userId := v.Get("userId")
+	intUserid, err := strconv.Atoi(userId)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	database.DB.Where("UsersID = ?", intUserid).Find(&jointable)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(jointable)
 }

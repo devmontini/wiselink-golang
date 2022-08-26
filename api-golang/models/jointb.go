@@ -1,6 +1,6 @@
 package models
 
 type UsersEvents struct {
-	UsersID  int `gorm:"primaryKey"`
-	EventsID int `gorm:"primaryKey"`
+	UsersID  int `json:"usersid" gorm:"primaryKey"`
+	EventsID int `json:"eventsid" gorm:"primaryKey"`
 }
