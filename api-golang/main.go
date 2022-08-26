@@ -28,16 +28,51 @@ func main() {
 
 	r.Use(ContentTypeMiddleware)
 
+	//HOME
 	r.HandleFunc("/", HomeRoute)
 
-	r.HandleFunc("/login", routes.LogInHandler).Methods("GET")
+	//SIGN UP
 	r.HandleFunc("/signup", routes.SignUpHandler).Methods("POST")
 
-	r.HandleFunc("/events/{userId}", routes.CreateEventsHandler).Methods("POST")
-	r.HandleFunc("/events/{userId}", routes.GetEventsHandler).Methods("GET")
-	r.HandleFunc("/events/{userId}/{eventId}", routes.GetEventHandlerById).Methods("GET")
-	r.HandleFunc("/events/{userId}/{eventId}", routes.DeleteEventHandlerById).Methods("DELETE")
-	r.HandleFunc("/events/{userId}/{eventId}", routes.EditEventHandlerById).Methods("PUT")
+	//LOG IN
+	r.HandleFunc("/login", routes.LogInHandler).Methods("GET")
+
+	//CREAR EVENTOS
+	r.HandleFunc("/events", routes.CreateEventsHandler).
+		Queries(
+			"userId", "{userId}",
+		).Methods("POST")
+
+	//BUSCAR TODOS LOS EVENTOS
+	r.HandleFunc("/events", routes.GetEventsHandler).
+		Queries(
+			"userId", "{userId}",
+			"title", "{title}",
+		).Methods("GET")
+
+	//BUSCAR UN EVENTO
+	r.HandleFunc("/events/info/{eventId}", routes.GetEventHandlerById).Methods("GET")
+
+	//EDITAR EL EVENTO
+	r.HandleFunc("/events/info/{eventId}", routes.EditEventHandlerById).
+		Queries(
+			"userId", "{userId}",
+		).Methods("PUT")
+
+	//BORRAR EL EVENTO
+	r.HandleFunc("/events/info/{eventId}", routes.DeleteEventHandlerById).
+		Queries(
+			"userId", "{userId}",
+		).Methods("DELETE")
+
+	//INSCRIBIRSE AL EVENTO
+	r.HandleFunc("/events/info/{eventId}", routes.InscEventHandlerById).
+		Queries(
+			"userId", "{userId}",
+		).Methods("POST")
+
+	//INSCRIPCIONES DE USUARIOS
+	r.HandleFunc("/user/{userId}", routes.GetUserEvents).Methods("GET")
 
 	http.ListenAndServe(":8080", r)
 }

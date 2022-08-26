@@ -5,5 +5,5 @@ type Users struct {
 	Username string   `json:"username" gorm:"unique;not null"`
 	Password string   `json:"password" gorm:"not null"`
 	Admin    bool     `json:"admin" gorm:"default:false"`
-	Events   []Events `gorm:"many2many:users_events;"`
+	Events   []Events `json:"events" gorm:"many2many:users_events;"`
 }
